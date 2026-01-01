@@ -1,0 +1,731 @@
+/* Global Reset & Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Selection Highlighter */
+.dragger-highlight {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: -2px !important;
+    cursor: crosshair !important;
+    z-index: 2147483646 !important;
+}
+
+body.dragger-selecting-active * {
+    cursor: crosshair !important;
+}
+
+body.dragger-resizing-active,
+body.dragger-resizing-active * {
+    user-select: none !important;
+}
+
+/* Draggable Editor Panel */
+#dragger-editor-panel {
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    z-index: 2147483647;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    height: 400px;
+    min-height: 200px;
+    max-width: 600px;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+/* Resize Handles */
+.dragger-resize-h {
+    position: absolute;
+    background: transparent;
+    z-index: 100;
+}
+
+.dragger-resize-h:hover {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.dragger-resize-r {
+    right: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    cursor: ew-resize;
+}
+
+.dragger-resize-l {
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    cursor: ew-resize;
+}
+
+.dragger-resize-b {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    cursor: ns-resize;
+}
+
+.dragger-resize-br {
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+    z-index: 101;
+}
+
+.dragger-resize-br:hover {
+    background: #3b82f6;
+    border-radius: 4px;
+}
+
+
+/* Header */
+#dragger-editor-panel .panel-header {
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    height: auto;
+    flex-shrink: 0;
+}
+
+#dragger-editor-panel .panel-header:active {
+    cursor: grabbing;
+}
+
+#dragger-editor-panel .panel-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.01em;
+}
+
+/* Action Bar (Space Between Select & History) */
+.dragger-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #dedede;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dragger-history-tools {
+    display: flex;
+    gap: 4px;
+}
+
+.dragger-icon-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #333;
+    background: transparent;
+    border: none;
+    transition: all 0.2s;
+}
+
+.dragger-icon-btn:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.05);
+    color: #000;
+}
+
+.dragger-icon-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.dragger-icon-btn.active {
+    background: #3b82f6;
+    color: white;
+}
+
+.dragger-icon-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
+}
+
+.dragger-button-group {
+    display: flex;
+    background: #f4f4f4;
+    padding: 2px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.dragger-toggle-btn {
+    width: 32px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.dragger-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.dragger-toggle-btn.active {
+    background: #fff;
+    color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dragger-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Element Classes Section */
+.dragger-classes-section {
+    padding: 10px 16px;
+    background: #f9f9f9;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    user-select: none;
+    cursor: default;
+}
+
+.dragger-class-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #3b82f6;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 12px;
+    color: #3b82f6;
+    transition: all 0.2s;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.dragger-class-item:hover {
+    background: #f0f4ff;
+}
+
+.dragger-class-item.inactive {
+    background: #f5f5f5;
+    border-color: #ddd;
+    color: #888;
+    opacity: 1;
+}
+
+.dragger-class-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    transition: color 0.2s;
+    padding-left: 6px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 2px;
+}
+
+.dragger-class-remove:hover {
+    color: #ef4444;
+}
+
+.dragger-class-remove svg {
+    width: 12px;
+    height: 12px;
+}
+
+.dragger-add-class-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 10px;
+    transition: transform 0.2s;
+}
+
+.dragger-add-class-btn:hover {
+    transform: scale(1.1);
+    background: #2563eb;
+}
+
+.dragger-add-class-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.dragger-class-eye {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    transition: color 0.2s;
+}
+
+.dragger-class-item.inactive .dragger-class-eye {
+    color: #999;
+}
+
+.dragger-class-eye:hover {
+    color: #2563eb;
+}
+
+/* Tabs */
+.dragger-tabs {
+    display: flex;
+    overflow-x: auto;
+    background: #fff;
+    scrollbar-width: none;
+    flex: 1;
+}
+
+.dragger-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.dragger-tab-item {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.dragger-tab-item:hover {
+    color: #333;
+}
+
+.dragger-tab-item.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+}
+
+/* Tab Dropdown Styles */
+.dragger-tabs-wrapper {
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+.dragger-tabs-dropdown-btn {
+    width: 36px;
+    height: auto;
+    background: #fff;
+    border: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    font-size: 16px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.dragger-tabs-dropdown-btn:hover {
+    color: #333;
+    background: #fafafa;
+}
+
+.dragger-tabs-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 160px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.dragger-dropdown-item {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dragger-dropdown-item:hover {
+    background: #f5f8ff;
+    color: #3b82f6;
+}
+
+.dragger-dropdown-item.active {
+    color: #3b82f6;
+    font-weight: 600;
+    background: #f0f4ff;
+}
+
+/* Content Area */
+#dragger-editor-panel .panel-content {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+#dragger-editor-panel .panel-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#dragger-editor-panel .panel-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#dragger-editor-panel .panel-content::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+#dragger-editor-panel .panel-content::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
+/* Controls & Inputs */
+.dragger-control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.dragger-control {
+    display: flex;
+    flex-direction: column;
+}
+
+.dragger-control.full-width {
+    grid-column: span 2;
+}
+
+.dragger-control label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.dragger-input {
+    background: #fcfcfc;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    color: #111;
+    padding: 6px 10px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+.dragger-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Color Group */
+.dragger-grouped-input {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.color-group .dragger-color-preview-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.color-group .dragger-color-preview-btn input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.color-group [data-type='color-text'] {
+    flex: 1;
+}
+
+.color-group [data-type='color-alpha'] {
+    width: 60px;
+    flex: none;
+}
+
+/* Radius Grid */
+.radius-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.radius-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.radius-item label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Transformation Presets */
+.dragger-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.dragger-preset-btn {
+    font-size: 12px;
+    padding: 3px 8px;
+    background: #f0f0f0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #555;
+}
+
+.dragger-preset-btn:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.dragger-spacing-group {
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.dragger-spacing-header {
+    margin-bottom: 6px;
+}
+
+.dragger-spacing-header label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Spacing Box */
+.dragger-virtual-box {
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.02);
+}
+
+.dragger-box-inner {
+    width: 50%;
+    height: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.dragger-box-label {
+    position: absolute;
+    font-size: 10px;
+    color: #444;
+    cursor: e-resize;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 2px 4px;
+    border-radius: 4px;
+    text-align: center;
+    width: 32px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.dragger-box-label:focus {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.dragger-box-label.active {
+    color: #3b82f6;
+    font-weight: 600;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.dragger-box-label.top {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dragger-box-label.bottom {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dragger-box-label.left {
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dragger-box-label.right {
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dragger-box-label.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    color: #3b82f6;
+    font-weight: 700;
+    width: 40px;
+    background: rgba(59, 130, 246, 0.05);
+}
+
+#dragger-margin-all,
+#dragger-padding-all {
+    width: 100px !important;
+}
+
+/* Side Icons (Borders) */
+.dragger-side-selector {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.dragger-side-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #999;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dragger-side-icon.active {
+    background: #fff;
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+body.dragger-resizing-active {
+    cursor: ew-resize !important;
+}
+
+body.dragger-resizing-active * {
+    pointer-events: none !important;
+}
+
+/* Scaling Rules */
+#dragger-editor-panel[data-width^="4"] .panel-header h3,
+#dragger-editor-panel[data-width^="5"] .panel-header h3,
+#dragger-editor-panel[data-width="600"] .panel-header h3 {
+    font-size: 18px;
+}
+
+#dragger-editor-panel[data-width^="4"] .dragger-tab-item,
+#dragger-editor-panel[data-width^="5"] .dragger-tab-item,
+#dragger-editor-panel[data-width="600"] .dragger-tab-item {
+    font-size: 14px;
+    padding: 12px 20px;
+}
+
+#dragger-editor-panel[data-width^="5"] .dragger-input,
+#dragger-editor-panel[data-width="600"] .dragger-input {
+    font-size: 15px;
+    height: 36px;
+}
+
+#dragger-editor-panel[data-width^="5"] .dragger-control label,
+#dragger-editor-panel[data-width="600"] .dragger-control label {
+    font-size: 14px;
+}
+
+#dragger-editor-panel[data-width^="45"] .dragger-control-grid,
+#dragger-editor-panel[data-width^="46"] .dragger-control-grid,
+#dragger-editor-panel[data-width^="47"] .dragger-control-grid,
+#dragger-editor-panel[data-width^="48"] .dragger-control-grid,
+#dragger-editor-panel[data-width^="49"] .dragger-control-grid,
+#dragger-editor-panel[data-width^="5"] .dragger-control-grid,
+#dragger-editor-panel[data-width="600"] .dragger-control-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#dragger-editor-panel[data-width^="45"] .dragger-control.full-width,
+#dragger-editor-panel[data-width^="46"] .dragger-control.full-width,
+#dragger-editor-panel[data-width^="47"] .dragger-control.full-width,
+#dragger-editor-panel[data-width^="48"] .dragger-control.full-width,
+#dragger-editor-panel[data-width^="49"] .dragger-control.full-width,
+#dragger-editor-panel[data-width^="5"] .dragger-control.full-width,
+#dragger-editor-panel[data-width="600"] .dragger-control.full-width {
+    grid-column: span 3;
+}

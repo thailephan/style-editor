@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Editor - Demo</title>
+    <link rel="stylesheet" href="content.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        header {
+            background: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        nav a {
+            margin-left: 24px;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #3b82f6;
+        }
+
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 64px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 20px;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #334155;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Dragger.io</div>
+    <nav>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1 id="hero-title">Visual CSS Editing for Everyone</h1>
+    <p class="subtitle" id="hero-subtitle">Make changes to your website in real-time without writing a single line of code. The ultimate tool for developers and designers.</p>
+    <a href="#" class="cta-button" id="cta-btn">Get Started Now</a>
+</section>
+
+<section class="features">
+    <div class="card">
+        <h3>Lightning Fast</h3>
+        <p>Edit styles instantly. No more context switching between your editor and browser.</p>
+    </div>
+    <div class="card">
+        <h3>Visual Controls</h3>
+        <p>Adjust padding, margins, fonts, and colors with intuitive visual controls.</p>
+    </div>
+    <div class="card">
+        <h3>Export Ready</h3>
+        <p>Copy the generated CSS and paste it directly into your stylesheets.</p>
+    </div>
+</section>
+
+<footer>
+    &copy; 2024 Dragger Style Editor. All rights reserved.
+</footer>
+
+<script src="mock_content.js"></script>
+<script>
+    // Activate on load after a delay
+    window.onload = () => {
+        setTimeout(() => {
+            window.draggerToggle(true);
+        }, 500);
+    };
+</script>
+</body>
+</html>
